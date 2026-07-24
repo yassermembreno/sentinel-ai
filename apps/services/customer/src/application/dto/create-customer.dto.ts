@@ -1,7 +1,3 @@
-import { CustomerTier } from '@customer/domain/customer.js';
+import type { CreateCustomerInput } from '@sentinel/validation';
 
-export type CreateCustomerDto = Readonly<{
-  name: string;
-  email: string;
-  tier: CustomerTier;
-}>;
+export type CreateCustomerDto = Readonly<CreateCustomerInput>;

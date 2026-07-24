@@ -21,7 +21,9 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@customer/*": ["./src/*"]
+      "@customer/*": ["./src/*"],
+      "@sentinel/validation": ["../../packages/validation/src/index.ts"]
     }
-  }
+  },
+  "include": ["./src/**/*", "./test/**/*"]
 }

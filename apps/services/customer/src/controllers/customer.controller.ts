@@ -8,16 +8,20 @@ import {
 } from '@nestjs/common';
 
 import { CustomerService } from '@customer/application/services/customer.service.js';
-import type { CreateCustomerDto } from '@customer/application/dto/create-customer.dto.js';
 import type { CustomerResponseDto } from '@customer/application/dto/customer-response.dto.js';
+import { CustomerValidationService } from '@customer/application/validation/customer-validation-service';
 
 @Controller('customers')
 export class CustomerController {
-  constructor(private readonly customerService: CustomerService) {}
+  constructor(
+    private readonly customerService: CustomerService,
+    private readonly customerValidationService: CustomerValidationService,
+  ) {}
 
   @Post()
-  async create(@Body() dto: CreateCustomerDto): Promise<CustomerResponseDto> {
-    return await this.customerService.createCustomer(dto);
+  async create(@Body() body: unknown): Promise<CustomerResponseDto> {
+    const request = this.customerValidationService.validateCreate(body);
+    return await this.customerService.createCustomer(request);
   }
 
   @Get(':id')

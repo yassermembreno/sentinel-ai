@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 
 import { HealthModule } from './health/health.module';
 import { DatabaseModule } from './infrastructure/database/database.module';
-import { ConfigModule } from '@nestjs/config';
 import { CustomerModule } from './customer.module';
 
 @Module({

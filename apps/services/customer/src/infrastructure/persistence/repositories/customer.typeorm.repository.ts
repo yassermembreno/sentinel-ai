@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { QueryFailedError, Repository } from 'typeorm';
 
 import { CustomerEntity } from '@customer/infrastructure/persistence/entities/customer.entity.js';
 import type { Customer } from '@customer/domain/customer.js';
 import type { CustomerRepository } from '@customer/application/ports/customer.repository.js';
+import { CustomerError } from '@customer/domain/errors/customer.error';
 
 @Injectable()
 export class CustomerTypeOrmRepository implements CustomerRepository {
@@ -34,14 +35,37 @@ export class CustomerTypeOrmRepository implements CustomerRepository {
   async save(customer: Customer): Promise<Customer> {
     const entity = this.repository.create(customer);
 
-    const saved = await this.repository.save(entity);
+    try {
+      const saved = await this.repository.save(entity);
 
-    return {
-      id: saved.id,
-      name: saved.name,
-      email: saved.email,
-      tier: saved.tier,
-      status: saved.status,
-    };
+      return {
+        id: saved.id,
+        name: saved.name,
+        email: saved.email,
+        tier: saved.tier,
+        status: saved.status,
+      };
+    } catch (error: any) {
+      if (error instanceof QueryFailedError) {
+        if (isPostgresUniqueViolation(error)) {
+          throw new CustomerError('Customer already exists');
+        }
+      }
+      throw error;
+    }
   }
+}
+
+function isPostgresUniqueViolation(error: unknown): error is QueryFailedError {
+  if (!(error instanceof QueryFailedError)) {
+    return false;
+  }
+
+  const driverError: unknown = error.driverError;
+
+  if (typeof driverError !== 'object' || driverError === null) {
+    return false;
+  }
+
+  return (driverError as Record<string, unknown>).code === '23505';
 }

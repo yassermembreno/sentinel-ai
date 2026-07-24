@@ -1,0 +1,257 @@
+{
+  ".vscode/settings.json": {
+    "mtime": 1784865734.0887246,
+    "ast_hash": "7e1c1c8c52ba7fd5871ccf04d97ec97a",
+    "semantic_hash": "7e1c1c8c52ba7fd5871ccf04d97ec97a"
+  },
+  "apps/ai-gateway/package.json": {
+    "mtime": 1784741005.8701446,
+    "ast_hash": "9099e9bad0ccedb40f923628d469582e",
+    "semantic_hash": "9099e9bad0ccedb40f923628d469582e"
+  },
+  "apps/services/billing/package.json": {
+    "mtime": 1784741005.8737824,
+    "ast_hash": "3c1c25a1fcf6232b56e5e76ece3fb265",
+    "semantic_hash": "3c1c25a1fcf6232b56e5e76ece3fb265"
+  },
+  "apps/services/customer/eslint.config.mjs": {
+    "mtime": 1784865734.0399404,
+    "ast_hash": "e9bc419fb44857f84db7f49f9b93dcfa",
+    "semantic_hash": "e9bc419fb44857f84db7f49f9b93dcfa"
+  },
+  "apps/services/customer/nest-cli.json": {
+    "mtime": 1784651627.298418,
+    "ast_hash": "b6c9c4b64b7092bea720263a47b574cf",
+    "semantic_hash": "b6c9c4b64b7092bea720263a47b574cf"
+  },
+  "apps/services/customer/package.json": {
+    "mtime": 1784865734.065073,
+    "ast_hash": "fb58a7cd49476b114d2d2ca6db819c68",
+    "semantic_hash": "fb58a7cd49476b114d2d2ca6db819c68"
+  },
+  "apps/services/customer/src/app.module.ts": {
+    "mtime": 1784858476.1824992,
+    "ast_hash": "e81814316312acf0acae1db09d36672e",
+    "semantic_hash": "e81814316312acf0acae1db09d36672e"
+  },
+  "apps/services/customer/src/application/dto/create-customer.dto.ts": {
+    "mtime": 1784865734.203642,
+    "ast_hash": "e6ae591ef7845a593ed6c7925ea93b61",
+    "semantic_hash": "e6ae591ef7845a593ed6c7925ea93b61"
+  },
+  "apps/services/customer/src/application/dto/customer-response.dto.ts": {
+    "mtime": 1784670481.5037875,
+    "ast_hash": "1f1ad2f78fa6fede2cf634c873063bc9",
+    "semantic_hash": "1f1ad2f78fa6fede2cf634c873063bc9"
+  },
+  "apps/services/customer/src/application/ports/customer.repository.ts": {
+    "mtime": 1784671136.4291558,
+    "ast_hash": "3e4cf8d003629c1e9168f8f76e1d50b9",
+    "semantic_hash": "3e4cf8d003629c1e9168f8f76e1d50b9"
+  },
+  "apps/services/customer/src/application/services/customer.service.ts": {
+    "mtime": 1784865640.200654,
+    "ast_hash": "222e62b858db9ca10f9f1a7a295824b7",
+    "semantic_hash": "222e62b858db9ca10f9f1a7a295824b7"
+  },
+  "apps/services/customer/src/application/validation/customer-validation-service.ts": {
+    "mtime": 1784863198.5476277,
+    "ast_hash": "8e629dc381635546d6ad06750a0aefb9",
+    "semantic_hash": "8e629dc381635546d6ad06750a0aefb9"
+  },
+  "apps/services/customer/src/controllers/customer.controller.ts": {
+    "mtime": 1784858169.5701625,
+    "ast_hash": "71a0cd842ca4454aa28f6c15a167c59f",
+    "semantic_hash": "71a0cd842ca4454aa28f6c15a167c59f"
+  },
+  "apps/services/customer/src/customer.module.ts": {
+    "mtime": 1784863271.0313454,
+    "ast_hash": "a8da0187931584f033d4e2362623dcbe",
+    "semantic_hash": "a8da0187931584f033d4e2362623dcbe"
+  },
+  "apps/services/customer/src/domain/customer.ts": {
+    "mtime": 1784670553.3087056,
+    "ast_hash": "daeaf2dc6b4f8aa3da9b0b12a544b5c9",
+    "semantic_hash": "daeaf2dc6b4f8aa3da9b0b12a544b5c9"
+  },
+  "apps/services/customer/src/health/health.controller.ts": {
+    "mtime": 1784652276.8170056,
+    "ast_hash": "ffa15a7c6fed5bf62dfce8020de77cbb",
+    "semantic_hash": "ffa15a7c6fed5bf62dfce8020de77cbb"
+  },
+  "apps/services/customer/src/health/health.module.ts": {
+    "mtime": 1784652441.3657632,
+    "ast_hash": "764a15d5b1c8706fececca7a7437b820",
+    "semantic_hash": "764a15d5b1c8706fececca7a7437b820"
+  },
+  "apps/services/customer/src/infrastructure/database/data-source.ts": {
+    "mtime": 1784685047.2701907,
+    "ast_hash": "1cac5e1220bc5e165e88d1f2c40cc6df",
+    "semantic_hash": "1cac5e1220bc5e165e88d1f2c40cc6df"
+  },
+  "apps/services/customer/src/infrastructure/database/database.config.ts": {
+    "mtime": 1784685047.2892303,
+    "ast_hash": "425b760fa97ed3d1e24d097b0904c5d1",
+    "semantic_hash": "425b760fa97ed3d1e24d097b0904c5d1"
+  },
+  "apps/services/customer/src/infrastructure/database/database.module.ts": {
+    "mtime": 1784684856.9449947,
+    "ast_hash": "5b0ba94ebd879c78ffab494d6f33d435",
+    "semantic_hash": "5b0ba94ebd879c78ffab494d6f33d435"
+  },
+  "apps/services/customer/src/infrastructure/database/migrations/1784690062819-CreateCustomersTable.ts": {
+    "mtime": 1784690293.7579398,
+    "ast_hash": "e040dac1046b7767f76d0504731bdd80",
+    "semantic_hash": "e040dac1046b7767f76d0504731bdd80"
+  },
+  "apps/services/customer/src/infrastructure/persistence/entities/customer.entity.ts": {
+    "mtime": 1784690053.482329,
+    "ast_hash": "cb99e512e61fd53f2063ae9a7f8e7e80",
+    "semantic_hash": "cb99e512e61fd53f2063ae9a7f8e7e80"
+  },
+  "apps/services/customer/src/infrastructure/persistence/repositories/customer.typeorm.repository.ts": {
+    "mtime": 1784865410.823523,
+    "ast_hash": "345b92074e4f9dc2150ba84cdd8effd0",
+    "semantic_hash": "345b92074e4f9dc2150ba84cdd8effd0"
+  },
+  "apps/services/customer/src/main.ts": {
+    "mtime": 1784865734.1512854,
+    "ast_hash": "d56c6bea525921f9e6e45f8ec93f2198",
+    "semantic_hash": "d56c6bea525921f9e6e45f8ec93f2198"
+  },
+  "apps/services/customer/test/app.e2e-spec.ts": {
+    "mtime": 1784651627.2994158,
+    "ast_hash": "91198fa8fc7e238ecc9dacec901d7a15",
+    "semantic_hash": "91198fa8fc7e238ecc9dacec901d7a15"
+  },
+  "apps/services/customer/test/jest-e2e.json": {
+    "mtime": 1784651627.299345,
+    "ast_hash": "9f2f5b0e1da31d7b04e205c944e85e8d",
+    "semantic_hash": "9f2f5b0e1da31d7b04e205c944e85e8d"
+  },
+  "apps/services/customer/tsconfig.build.json": {
+    "mtime": 1784865734.0518222,
+    "ast_hash": "99c68e933b560277434d279798fa3adc",
+    "semantic_hash": "99c68e933b560277434d279798fa3adc"
+  },
+  "apps/services/customer/tsconfig.json": {
+    "mtime": 1784865734.0261202,
+    "ast_hash": "0b0b1b9f851c65d1471f1d4f7f1f5a36",
+    "semantic_hash": "0b0b1b9f851c65d1471f1d4f7f1f5a36"
+  },
+  "apps/services/customer/tsconfig.runtime.json": {
+    "mtime": 1784672183.5969408,
+    "ast_hash": "520057d2c1cf50f153a33d1e3ddc7aa3",
+    "semantic_hash": "520057d2c1cf50f153a33d1e3ddc7aa3"
+  },
+  "apps/services/ticket/package.json": {
+    "mtime": 1784741006.0382228,
+    "ast_hash": "1a6c4140256477a327b0cf239aaf37a9",
+    "semantic_hash": "1a6c4140256477a327b0cf239aaf37a9"
+  },
+  "apps/web/package.json": {
+    "mtime": 1784741006.0407221,
+    "ast_hash": "e1e83163a1a695c8ada2ff72785cc62e",
+    "semantic_hash": "e1e83163a1a695c8ada2ff72785cc62e"
+  },
+  "eslint.config.mjs": {
+    "mtime": 1784865734.0780437,
+    "ast_hash": "5bf249316491bad3a0d1dd26b47ab1ac",
+    "semantic_hash": "5bf249316491bad3a0d1dd26b47ab1ac"
+  },
+  "package.json": {
+    "mtime": 1784865734.1190693,
+    "ast_hash": "0c95eda836c9adc5d1a5dced1cb19388",
+    "semantic_hash": "0c95eda836c9adc5d1a5dced1cb19388"
+  },
+  "packages/validation/eslint.config.mjs": {
+    "mtime": 1784742348.7837763,
+    "ast_hash": "6df66d6ae24a834da99a25a2576ec736",
+    "semantic_hash": "6df66d6ae24a834da99a25a2576ec736"
+  },
+  "packages/validation/package.json": {
+    "mtime": 1784865734.1056175,
+    "ast_hash": "83052059fba5cc09252a88d0946f6c7e",
+    "semantic_hash": "83052059fba5cc09252a88d0946f6c7e"
+  },
+  "packages/validation/src/customer/create-customer.schema.ts": {
+    "mtime": 1784865734.1888301,
+    "ast_hash": "c198e14891e39dfbf6e974772bdb8289",
+    "semantic_hash": "c198e14891e39dfbf6e974772bdb8289"
+  },
+  "packages/validation/src/customer/index.ts": {
+    "mtime": 1784741006.061887,
+    "ast_hash": "66dfe9f730e61c076703cdbfde55428f",
+    "semantic_hash": "66dfe9f730e61c076703cdbfde55428f"
+  },
+  "packages/validation/src/error/index.js": {
+    "mtime": 1784860444.012618,
+    "ast_hash": "e080d8c17930d404cff6799fbadab3cc",
+    "semantic_hash": "e080d8c17930d404cff6799fbadab3cc"
+  },
+  "packages/validation/src/error/validation-failed.error.ts": {
+    "mtime": 1784863592.3878691,
+    "ast_hash": "38b975469bb3f262f884afc877082d9b",
+    "semantic_hash": "38b975469bb3f262f884afc877082d9b"
+  },
+  "packages/validation/src/index.ts": {
+    "mtime": 1784860684.488466,
+    "ast_hash": "167fbca3dfb78419cf28b8c5ae97340c",
+    "semantic_hash": "167fbca3dfb78419cf28b8c5ae97340c"
+  },
+  "packages/validation/src/strategies/index.ts": {
+    "mtime": 1784860684.488452,
+    "ast_hash": "e8f91647a032966a1bee18d008265e43",
+    "semantic_hash": "e8f91647a032966a1bee18d008265e43"
+  },
+  "packages/validation/src/strategies/safe-validation-strategy.ts": {
+    "mtime": 1784863477.8070138,
+    "ast_hash": "7ab52f96de6ea88b3abbdb76f8f64734",
+    "semantic_hash": "7ab52f96de6ea88b3abbdb76f8f64734"
+  },
+  "packages/validation/src/strategies/unsafe-validation-strategy.ts": {
+    "mtime": 1784863608.6726727,
+    "ast_hash": "b65df5644d301bf0a73a48221c8eca4b",
+    "semantic_hash": "b65df5644d301bf0a73a48221c8eca4b"
+  },
+  "packages/validation/src/strategies/validation-strategy.ts": {
+    "mtime": 1784862376.094625,
+    "ast_hash": "1bb077ef25af359c1d74cda1b69af4d0",
+    "semantic_hash": "1bb077ef25af359c1d74cda1b69af4d0"
+  },
+  "packages/validation/tsconfig.json": {
+    "mtime": 1784863062.503105,
+    "ast_hash": "e5749c9de6f3c6a47c543ec43af589c5",
+    "semantic_hash": "e5749c9de6f3c6a47c543ec43af589c5"
+  },
+  "tsconfig.base.json": {
+    "mtime": 1784741006.08996,
+    "ast_hash": "a9f794548ee83b3c6449a6046f15195c",
+    "semantic_hash": "a9f794548ee83b3c6449a6046f15195c"
+  },
+  "turbo.json": {
+    "mtime": 1784865734.1746035,
+    "ast_hash": "37d1480278b0452b9f2d6afa2033e73e",
+    "semantic_hash": "37d1480278b0452b9f2d6afa2033e73e"
+  },
+  "README.md": {
+    "mtime": 1784741006.0881226,
+    "ast_hash": "4e099f338c3e461a0a124704061b2e6b",
+    "semantic_hash": "4e099f338c3e461a0a124704061b2e6b"
+  },
+  "apps/services/customer/README.md": {
+    "mtime": 1784651627.2982345,
+    "ast_hash": "8e8d8363582979f3debdc321fd7dbe4a",
+    "semantic_hash": "8e8d8363582979f3debdc321fd7dbe4a"
+  },
+  "infra/docker-compose.yml": {
+    "mtime": 1784741006.0526662,
+    "ast_hash": "6ac85efc59b0d59e2a923c2705fcea11",
+    "semantic_hash": "6ac85efc59b0d59e2a923c2705fcea11"
+  },
+  "pnpm-workspace.yaml": {
+    "mtime": 1784741006.0780032,
+    "ast_hash": "91db1a9d808e2287465a7f2af336b3b3",
+    "semantic_hash": "91db1a9d808e2287465a7f2af336b3b3"
+  }
+}

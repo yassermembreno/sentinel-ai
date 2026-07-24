@@ -1,9 +1,12 @@
-import { Inject, Injectable } from '@nestjs/common';
-
-import { CustomerStatus, type Customer } from '@customer/domain/customer.js';
+import {
+  CustomerStatus,
+  CustomerTier,
+  type Customer,
+} from '@customer/domain/customer.js';
 import type { CustomerRepository } from '@customer/application/ports/customer.repository.js';
-import type { CreateCustomerDto } from '@customer/application/dto/create-customer.dto.js';
+import type { CreateCustomerInput } from '@sentinel/validation';
 import type { CustomerResponseDto } from '@customer/application/dto/customer-response.dto.js';
+import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class CustomerService {
@@ -12,22 +15,22 @@ export class CustomerService {
     private readonly customerRepository: CustomerRepository,
   ) {}
 
-  async createCustomer(dto: CreateCustomerDto): Promise<CustomerResponseDto> {
+  async createCustomer(
+    input: CreateCustomerInput,
+  ): Promise<CustomerResponseDto> {
     const customer: Customer = {
       id: crypto.randomUUID(),
 
-      name: dto.name,
+      name: input.name,
 
-      email: dto.email,
+      email: input.email,
 
-      tier: dto.tier,
+      tier: input.tier as CustomerTier,
 
       status: CustomerStatus.ACTIVE,
     };
 
-    const saved = await this.customerRepository.save(customer);
-
-    return this.toResponse(saved);
+    return this.customerRepository.save(customer);
   }
 
   async getCustomerById(id: string): Promise<CustomerResponseDto | null> {
