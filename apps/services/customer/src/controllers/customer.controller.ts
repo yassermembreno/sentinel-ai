@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  NotFoundException,
-  Param,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
 import { CustomerService } from '@customer/application/services/customer.service.js';
 import type { CustomerResponseDto } from '@customer/application/dto/customer-response.dto.js';
@@ -26,12 +19,6 @@ export class CustomerController {
 
   @Get(':id')
   async findById(@Param('id') id: string): Promise<CustomerResponseDto> {
-    const customer = await this.customerService.getCustomerById(id);
-
-    if (!customer) {
-      throw new NotFoundException('Customer not found');
-    }
-
-    return customer;
+    return await this.customerService.getCustomerById(id);
   }
 }

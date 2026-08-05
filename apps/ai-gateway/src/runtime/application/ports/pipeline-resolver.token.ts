@@ -1,0 +1,1 @@
+export const PIPELINE_RESOLVER = Symbol('PIPELINE_RESOLVER');

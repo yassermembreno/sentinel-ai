@@ -5,6 +5,6 @@ import { DomainExceptionFilter } from '@customer/infrastructure/http/filters/dom
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new DomainExceptionFilter());
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 3002);
 }
 void bootstrap();

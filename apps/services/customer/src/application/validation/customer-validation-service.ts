@@ -3,7 +3,8 @@ import {
   createCustomerSchema,
   CreateCustomerInput,
 } from '@sentinel/validation';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { ValidationDomainError } from '@customer/domain/errors/validation-error';
 
 @Injectable()
 export class CustomerValidationService {
@@ -16,9 +17,9 @@ export class CustomerValidationService {
       return result.value;
     }
 
-    throw new BadRequestException({
-      message: 'Validation failed',
-      errors: result.errors,
-    });
+    throw new ValidationDomainError(
+      result.errors.map((error) => error.message).join(', '),
+      result.errors,
+    );
   }
 }

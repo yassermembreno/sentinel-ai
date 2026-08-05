@@ -1,0 +1,15 @@
+{
+   "extends": "../../tsconfig.base.json",
+   "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "resolvePackageJsonExports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "ES2023",
+    "strict": true,
+    "incremental": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+   }
+}

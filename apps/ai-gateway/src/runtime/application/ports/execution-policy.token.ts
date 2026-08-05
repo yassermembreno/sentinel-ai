@@ -1,0 +1,1 @@
+export const EXECUTION_POLICY = Symbol('EXECUTION_POLICY');
