@@ -1,0 +1,1 @@
+export const OLLAMA_OPTIONS = Symbol('OLLAMA_OPTIONS');

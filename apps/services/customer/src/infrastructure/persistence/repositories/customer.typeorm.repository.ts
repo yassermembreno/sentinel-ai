@@ -6,6 +6,7 @@ import { CustomerEntity } from '@customer/infrastructure/persistence/entities/cu
 import type { Customer } from '@customer/domain/customer.js';
 import type { CustomerRepository } from '@customer/application/ports/customer.repository.js';
 import { CustomerError } from '@customer/domain/errors/customer.error';
+import { CustomerErrorCodes } from '@customer/domain/errors/customer.error-codes';
 
 @Injectable()
 export class CustomerTypeOrmRepository implements CustomerRepository {
@@ -37,7 +38,6 @@ export class CustomerTypeOrmRepository implements CustomerRepository {
 
     try {
       const saved = await this.repository.save(entity);
-
       return {
         id: saved.id,
         name: saved.name,
@@ -48,7 +48,11 @@ export class CustomerTypeOrmRepository implements CustomerRepository {
     } catch (error: any) {
       if (error instanceof QueryFailedError) {
         if (isPostgresUniqueViolation(error)) {
-          throw new CustomerError('Customer already exists');
+          throw new CustomerError(
+            'Customer already exists',
+            CustomerErrorCodes.ALREADY_EXISTS.code,
+            CustomerErrorCodes.ALREADY_EXISTS.httpStatus,
+          );
         }
       }
       throw error;

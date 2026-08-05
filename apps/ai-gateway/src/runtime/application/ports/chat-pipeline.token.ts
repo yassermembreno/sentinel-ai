@@ -1,0 +1,1 @@
+export const CHAT_PIPELINE = Symbol('CHAT_PIPELINE');

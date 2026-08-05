@@ -7,6 +7,8 @@ import type { CustomerRepository } from '@customer/application/ports/customer.re
 import type { CreateCustomerInput } from '@sentinel/validation';
 import type { CustomerResponseDto } from '@customer/application/dto/customer-response.dto.js';
 import { Inject, Injectable } from '@nestjs/common';
+import { CustomerErrorCodes } from '@customer/domain/errors/customer.error-codes';
+import { CustomerError } from '@customer/domain/errors/customer.error';
 
 @Injectable()
 export class CustomerService {
@@ -33,11 +35,15 @@ export class CustomerService {
     return this.customerRepository.save(customer);
   }
 
-  async getCustomerById(id: string): Promise<CustomerResponseDto | null> {
+  async getCustomerById(id: string): Promise<CustomerResponseDto> {
     const customer = await this.customerRepository.findById(id);
 
     if (!customer) {
-      return null;
+      throw new CustomerError(
+        'Customer not found',
+        CustomerErrorCodes.NOT_FOUND.code,
+        CustomerErrorCodes.NOT_FOUND.httpStatus,
+      );
     }
 
     return this.toResponse(customer);
