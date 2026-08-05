@@ -1,5 +1,6 @@
 export interface ToolResult {
-    toolCallId?: string;
-    success: boolean;
-    data: Record<string, unknown>;
+  toolCallId?: string;
+  toolName: string;
+  success: boolean;
+  data: unknown;
 }

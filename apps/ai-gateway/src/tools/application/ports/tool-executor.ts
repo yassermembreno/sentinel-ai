@@ -1,6 +1,6 @@
-import { ToolCall } from "../../../tools/domain/value-objects/tool-call.js";
-import { ToolResult } from "../../../tools/domain/value-objects/tool-result.js";
+import { ToolCall } from '../../domain/value-objects/tool-call';
+import { ToolResult } from '../../domain/value-objects/tool-result';
 
 export interface ToolExecutor {
-    execute(toolCall: ToolCall): Promise<ToolResult>;
+  execute(toolCall: ToolCall): Promise<ToolResult>;
 }

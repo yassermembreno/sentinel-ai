@@ -1,9 +1,9 @@
 import { MessageRole } from '../../../../runtime/domain/enums/message-role';
-import { OllamaTool } from './ollama-tool';
+import { OllamaToolCall } from './ollama-tool-call';
 
 export interface OllamaMessage {
   role: MessageRole;
   content: string;
-  tool_calls?: OllamaTool[];
+  tool_calls?: OllamaToolCall[];
   tool_name?: string;
 }

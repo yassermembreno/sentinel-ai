@@ -55,6 +55,6 @@ import { LlmOptions } from './application/options/llm.options';
       useClass: DefaultLLMResolver,
     },
   ],
-  exports: [LLM_RESOLVER, LLM_PROVIDER_REGISTRY, LLM_OPTIONS],
+  exports: [LLM_RESOLVER, LLM_PROVIDER_REGISTRY, LLM_OPTIONS, OllamaMapper],
 })
 export class LlmModule {}

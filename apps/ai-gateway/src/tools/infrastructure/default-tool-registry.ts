@@ -1,17 +1,32 @@
-import { Injectable } from "@nestjs/common";
-import { Tool } from "../application/ports/tool";
-import { ToolRegistry } from "../application/ports/tool-registry";
+import { Tool } from '../application/ports/tool';
+import { ToolRegistry } from '../application/ports/tool-registry';
 
-@Injectable()
 export class DefaultToolRegistry implements ToolRegistry {
+  private readonly tools: Map<string, Tool>;
 
-  private readonly tools: Tool[] = [];
-
-  register(tool: Tool): void {
-    this.tools.push(tool);
+  constructor(entries: Tool[]) {
+    this.tools = new Map(entries.map((tool) => [tool.name, tool]));
   }
 
-  getTools(): Tool[] {
-    return [...this.tools];
+  get(name: string): Tool {
+    const tool = this.tools.get(name);
+    if (!tool) {
+      const registered = [...this.tools.keys()]
+        .map((id) => `- ${id}`)
+        .join('\n');
+
+      throw new Error(
+        `Unknown tool '${name}'.\n\nRegistered tools:\n${registered}`,
+      );
+    }
+    return tool;
+  }
+
+  has(name: string): boolean {
+    return this.tools.has(name);
+  }
+
+  list(): readonly Tool[] {
+    return [...this.tools.values()];
   }
 }

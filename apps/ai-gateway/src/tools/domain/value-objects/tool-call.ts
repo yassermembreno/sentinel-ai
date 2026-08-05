@@ -1,5 +1,5 @@
 export interface ToolCall {
   id?: string;
-  name: string;
+  toolName: string;
   arguments: Record<string, unknown>;
 }

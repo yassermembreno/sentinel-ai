@@ -13,15 +13,16 @@ export class AppTestService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    const execution: Execution ={
+    const execution: Execution = {
       id: 'test-id',
       sessionId: 'session-1',
       messages: [
         {
           role: MessageRole.USER,
-          content: 'Hola, ¿quién eres?',
+          content: 'Usa la herramienta echo para repetir exactamente: hola sentinel',
         },
       ],
+      toolCalls: [],
     };
 
     const response = await this.aiRuntimeService.execute(execution);

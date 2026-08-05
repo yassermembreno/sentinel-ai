@@ -24,12 +24,12 @@ export class OllamaProvider implements LLMProvider {
   async generate(execution: Execution): Promise<LLMResponse> {
 
       const payload = this.mapper.toChatPayload(
-          execution,            
-          this.toolRegistry.getTools(),
+          execution,
+          [...this.toolRegistry.list()],
         );
     
       const response = await this.client.chat(payload);
-    
+      console.log(response);
       return this.mapper.toLlmResponse(response);
   }
 }

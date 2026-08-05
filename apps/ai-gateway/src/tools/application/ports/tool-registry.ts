@@ -1,6 +1,7 @@
-import { Tool } from "./tool";
+import { Tool } from './tool';
 
 export interface ToolRegistry {
-    register(tool: Tool): void;
-    getTools(): Tool[];
+  get(name: string): Tool;
+  has(name: string): boolean;
+  list(): readonly Tool[];
 }
