@@ -17,6 +17,11 @@ export class CustomerController {
     return await this.customerService.createCustomer(request);
   }
 
+  @Get()
+  async list(): Promise<CustomerResponseDto[]> {
+    return await this.customerService.listCustomers();
+  }
+
   @Get(':id')
   async findById(@Param('id') id: string): Promise<CustomerResponseDto> {
     return await this.customerService.getCustomerById(id);

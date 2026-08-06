@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { Tool } from '../../application/ports/tool';
+import { ToolCapability } from '../../domain/enums/tool-capability';
 import { ToolCall } from '../../domain/value-objects/tool-call';
 import { ToolResult } from '../../domain/value-objects/tool-result';
 
@@ -9,6 +10,7 @@ export class EchoTool implements Tool {
   readonly name = 'echo';
   readonly description =
     'Echoes back the provided message. Use when the user asks to echo or repeat text.';
+  readonly capability: ToolCapability = 'read';
   readonly parameters: Record<string, unknown> = {
     type: 'object',
     properties: {

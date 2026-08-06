@@ -49,6 +49,11 @@ export class CustomerService {
     return this.toResponse(customer);
   }
 
+  async listCustomers(): Promise<CustomerResponseDto[]> {
+    const customers = await this.customerRepository.findAll();
+    return customers.map((customer) => this.toResponse(customer));
+  }
+
   private toResponse(customer: Customer): CustomerResponseDto {
     return {
       id: customer.id,

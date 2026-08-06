@@ -1,0 +1,2 @@
+export const VULNERABLE_PIPELINE = Symbol('VULNERABLE_PIPELINE');
+export const SECURE_PIPELINE = Symbol('SECURE_PIPELINE');

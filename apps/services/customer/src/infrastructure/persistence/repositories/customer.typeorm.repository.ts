@@ -24,13 +24,15 @@ export class CustomerTypeOrmRepository implements CustomerRepository {
       return null;
     }
 
-    return {
-      id: entity.id,
-      name: entity.name,
-      email: entity.email,
-      tier: entity.tier,
-      status: entity.status,
-    };
+    return this.toDomain(entity);
+  }
+
+  async findAll(): Promise<Customer[]> {
+    const entities = await this.repository.find({
+      order: { name: 'ASC' },
+    });
+
+    return entities.map((entity) => this.toDomain(entity));
   }
 
   async save(customer: Customer): Promise<Customer> {
@@ -38,13 +40,7 @@ export class CustomerTypeOrmRepository implements CustomerRepository {
 
     try {
       const saved = await this.repository.save(entity);
-      return {
-        id: saved.id,
-        name: saved.name,
-        email: saved.email,
-        tier: saved.tier,
-        status: saved.status,
-      };
+      return this.toDomain(saved);
     } catch (error: any) {
       if (error instanceof QueryFailedError) {
         if (isPostgresUniqueViolation(error)) {
@@ -57,6 +53,16 @@ export class CustomerTypeOrmRepository implements CustomerRepository {
       }
       throw error;
     }
+  }
+
+  private toDomain(entity: CustomerEntity): Customer {
+    return {
+      id: entity.id,
+      name: entity.name,
+      email: entity.email,
+      tier: entity.tier,
+      status: entity.status,
+    };
   }
 }
 
