@@ -51,7 +51,11 @@ export class OllamaMapper {
   toToolMessage(call: ToolCall, result: ToolResult): Message {
     return {
       role: MessageRole.TOOL,
-      content: JSON.stringify(result.data),
+      content: JSON.stringify({
+        success: result.success,
+        data: result.data,
+        error: result.error,
+      }),
       metadata: {
         toolName: result.toolName,
         toolCallId: result.toolCallId ?? call.id,
@@ -69,49 +73,74 @@ export class OllamaMapper {
         continue;
       }
 
-      if (message.role === MessageRole.TOOL) {
-        result.push({
-          role: MessageRole.TOOL,
-          content: message.content,
-          tool_name: message.metadata?.toolName,
-        });
-        continue;
-      }
-
-      if (message.role === MessageRole.ASSISTANT) {
-        const followingTools: Message[] = [];
-        let j = i + 1;
-        while (j < messages.length) {
-          const next = messages[j];
-          if (!next || next.role !== MessageRole.TOOL) {
-            break;
-          }
-          followingTools.push(next);
-          j++;
-        }
-
-        const ollamaMessage: OllamaMessage = {
-          role: MessageRole.ASSISTANT,
-          content: message.content,
-        };
-
-        if (followingTools.length > 0) {
-          ollamaMessage.tool_calls = followingTools.map((toolMessage) =>
-            this.toOllamaToolCallFromMetadata(toolMessage),
-          );
-        }
-
-        result.push(ollamaMessage);
-        continue;
-      }
-
-      result.push({
-        role: message.role,
-        content: message.content,
-      });
+      result.push(this.toOllamaMessage(message, messages, i));
     }
 
     return result;
+  }
+
+  private toOllamaMessage(
+    message: Message,
+    messages: Message[],
+    index: number,
+  ): OllamaMessage {
+    if (message.role === MessageRole.TOOL) {
+      return this.toOllamaToolMessage(message);
+    }
+
+    if (message.role === MessageRole.ASSISTANT) {
+      return this.toOllamaAssistantMessage(message, messages, index);
+    }
+
+    return {
+      role: message.role,
+      content: message.content,
+    };
+  }
+
+  private toOllamaToolMessage(message: Message): OllamaMessage {
+    return {
+      role: MessageRole.TOOL,
+      content: message.content,
+      tool_name: message.metadata?.toolName,
+    };
+  }
+
+  private toOllamaAssistantMessage(
+    message: Message,
+    messages: Message[],
+    index: number,
+  ): OllamaMessage {
+    const followingTools = this.collectFollowingToolMessages(messages, index + 1);
+    const ollamaMessage: OllamaMessage = {
+      role: MessageRole.ASSISTANT,
+      content: message.content,
+    };
+
+    if (followingTools.length > 0) {
+      ollamaMessage.tool_calls = followingTools.map((toolMessage) =>
+        this.toOllamaToolCallFromMetadata(toolMessage),
+      );
+    }
+
+    return ollamaMessage;
+  }
+
+  private collectFollowingToolMessages(
+    messages: Message[],
+    startIndex: number,
+  ): Message[] {
+    const followingTools: Message[] = [];
+
+    for (let j = startIndex; j < messages.length; j++) {
+      const next = messages[j];
+      if (next?.role !== MessageRole.TOOL) {
+        break;
+      }
+      followingTools.push(next);
+    }
+
+    return followingTools;
   }
 
   private toToolCall(call: OllamaToolCall): ToolCall {

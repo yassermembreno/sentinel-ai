@@ -34,8 +34,12 @@ Customer API   Billing API   Ticket API
  |
  v
 
-Databases
+Databases (sentinel / sentinel_billing / sentinel_ticket)
 ```
+
+Bounded autonomy (LLM06): the secure pipeline evaluates tool **arguments**
+via per-tool security policies (e.g. `apply_credit` autonomous limit) before
+execution. See `apps/ai-gateway/src/scenarios/excessive-agency/`.
 
 ## Repository Structure
 

@@ -1,5 +1,6 @@
-import { ChatPipeline } from "./chat-pipeline";
+import { ChatPipeline } from './chat-pipeline';
+import { Execution } from '../../domain/entities/execution';
 
 export interface PipelineResolver {
-    resolve(): Promise<ChatPipeline>;
+  resolve(execution: Execution): Promise<ChatPipeline>;
 }
