@@ -36,6 +36,7 @@ export class TicketTypeOrmRepository implements TicketRepository {
       id: entity.id,
       customerId: entity.customerId,
       subject: entity.subject,
+      description: entity.description ?? null,
       status: entity.status,
       priority: entity.priority,
     };

@@ -13,6 +13,7 @@ export type Ticket = {
   id: string;
   customerId: string;
   subject: string;
+  description: string | null;
   status: TicketStatus;
   priority: TicketPriority;
 };
