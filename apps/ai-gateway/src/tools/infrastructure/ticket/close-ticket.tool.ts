@@ -8,16 +8,24 @@ import { ToolResult } from '../../domain/value-objects/tool-result';
 import { ServiceBaseUrlOptions } from '../shared/service-base-url.options';
 import { TICKET_SERVICE_OPTIONS } from './ticket-service.options.token';
 import { executionErrorResult } from '../shared/execution-error-result';
+import {
+  isToolResult,
+  requireUuidArg,
+} from '../shared/require-uuid-arg';
 
 @Injectable()
 export class CloseTicketTool implements Tool {
   readonly name = 'close_ticket';
-  readonly description = 'Close an open support ticket by ticketId.';
+  readonly description =
+    'Close an existing ticket by its real UUID.\nThe ticketId must come from a previous tool result or a valid existing identifier.';
   readonly capability: ToolCapability = 'operational';
   readonly parameters: Record<string, unknown> = {
     type: 'object',
     properties: {
-      ticketId: { type: 'string', description: 'Ticket UUID' },
+      ticketId: {
+        type: 'string',
+        description: 'Ticket UUID (e.g. 22222222-2222-4222-8222-222222222222)',
+      },
     },
     required: ['ticketId'],
   };
@@ -28,11 +36,19 @@ export class CloseTicketTool implements Tool {
   ) {}
 
   async execute(call: ToolCall): Promise<ToolResult> {
-    const ticketId = String(call.arguments['ticketId'] ?? '');
+    const ticketIdOrError = requireUuidArg(
+      call,
+      this.name,
+      call.arguments['ticketId'],
+      'ticketId',
+    );
+    if (isToolResult(ticketIdOrError)) {
+      return ticketIdOrError;
+    }
 
     try {
       const { data } = await axios.post(
-        `${this.options.baseUrl}/tickets/${ticketId}/close`,
+        `${this.options.baseUrl}/tickets/${ticketIdOrError}/close`,
         {},
         { timeout: 10_000 },
       );

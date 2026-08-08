@@ -8,12 +8,16 @@ import { ToolResult } from '../../domain/value-objects/tool-result';
 import { ServiceBaseUrlOptions } from '../shared/service-base-url.options';
 import { BILLING_SERVICE_OPTIONS } from './billing-service.options.token';
 import { executionErrorResult } from '../shared/execution-error-result';
+import {
+  isToolResult,
+  requireUuidArg,
+} from '../shared/require-uuid-arg';
 
 @Injectable()
 export class GetInvoiceStatusTool implements Tool {
   readonly name = 'get_invoice_status';
   readonly description =
-    'Get invoice status for a customer. Provide customerId and optionally invoiceId.';
+    'Get invoice status for a customer. Provide customerId (UUID) and optionally invoiceId (UUID).';
   readonly capability: ToolCapability = 'read';
   readonly parameters: Record<string, unknown> = {
     type: 'object',
@@ -30,13 +34,22 @@ export class GetInvoiceStatusTool implements Tool {
   ) {}
 
   async execute(call: ToolCall): Promise<ToolResult> {
-    const customerId = String(call.arguments['customerId'] ?? '');
     const invoiceId = call.arguments['invoiceId'];
 
     try {
       if (typeof invoiceId === 'string' && invoiceId.length > 0) {
+        const idOrError = requireUuidArg(
+          call,
+          this.name,
+          invoiceId,
+          'invoiceId',
+        );
+        if (isToolResult(idOrError)) {
+          return idOrError;
+        }
+
         const { data } = await axios.get(
-          `${this.options.baseUrl}/invoices/${invoiceId}`,
+          `${this.options.baseUrl}/invoices/${idOrError}`,
           { timeout: 10_000 },
         );
         return {
@@ -47,8 +60,18 @@ export class GetInvoiceStatusTool implements Tool {
         };
       }
 
+      const customerIdOrError = requireUuidArg(
+        call,
+        this.name,
+        call.arguments['customerId'],
+        'customerId',
+      );
+      if (isToolResult(customerIdOrError)) {
+        return customerIdOrError;
+      }
+
       const { data } = await axios.get(`${this.options.baseUrl}/invoices`, {
-        params: { customerId },
+        params: { customerId: customerIdOrError },
         timeout: 10_000,
       });
 

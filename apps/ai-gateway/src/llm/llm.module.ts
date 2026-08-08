@@ -31,13 +31,14 @@ import { LlmOptions } from './application/options/llm.options';
       useFactory: (configService: ConfigService) => ({
         baseUrl: configService.getOrThrow<string>('OLLAMA_BASE_URL'),
         model: configService.getOrThrow<string>('OLLAMA_MODEL'),
+        temperature: configService.getOrThrow<number>('OLLAMA_TEMPERATURE'),
       }),
       inject: [ConfigService],
     },
     {
       provide: LLM_OPTIONS,
       useFactory: (config: ConfigService): LlmOptions => ({
-        providerId: config.get<string>('LLM_PROVIDER_ID') ?? 'ollama',
+        providerId: config.get<string>('LLM_PROVIDER_ID') ?? 'ollama',        
       }),
       inject: [ConfigService],
     },

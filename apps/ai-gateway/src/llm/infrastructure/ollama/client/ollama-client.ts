@@ -19,7 +19,7 @@ export class OllamaClient {
 
     const { data } = await axios.post<OllamaChatResponse>(
       `${this.options.baseUrl}/api/chat`,
-      { ...payload, model: this.options.model },
+      { ...payload, model: this.options.model, temperature: this.options.temperature },
     );
 
     return data;

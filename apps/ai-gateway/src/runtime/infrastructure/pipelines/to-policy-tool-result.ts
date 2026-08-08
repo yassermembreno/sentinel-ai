@@ -11,6 +11,10 @@ export function toPolicyToolResult(
       toolCallId: call.id,
       toolName: call.toolName,
       success: false,
+      data: {
+        status: 'DENIED',
+        code: decision.code,
+      },
       error: {
         type: 'POLICY_DENIED',
         message: decision.reason,
@@ -23,6 +27,8 @@ export function toPolicyToolResult(
     toolName: call.toolName,
     success: false,
     data: {
+      status: 'REQUIRE_APPROVAL',
+      code: decision.code,
       pendingAction: decision.pendingAction,
     },
     error: {

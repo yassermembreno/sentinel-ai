@@ -17,7 +17,9 @@ export class OperationalDenyPolicy implements ToolSecurityPolicy {
   ): ToolExecutionDecision {
     return {
       status: 'DENY',
-      reason: 'Operational action requires authorization',
+      code: 'OPERATIONAL_ACTION_NOT_ALLOWED',
+      reason:
+        'Operational action is not permitted under the current governance policy',
     };
   }
 }

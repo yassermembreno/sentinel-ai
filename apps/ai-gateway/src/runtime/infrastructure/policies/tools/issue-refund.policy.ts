@@ -17,7 +17,8 @@ export class IssueRefundPolicy implements ToolSecurityPolicy {
   ): ToolExecutionDecision {
     return {
       status: 'REQUIRE_APPROVAL',
-      reason: 'Refund requires human approval',
+      code: 'REFUND_REQUIRES_APPROVAL',
+      reason: 'Refund requires human approval before execution',
       pendingAction: {
         tool: toolCall.toolName,
         arguments: toolCall.arguments,

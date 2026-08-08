@@ -16,7 +16,8 @@ export class BillingPlanController {
     @Param('customerId') customerId: string,
     @Body() body: unknown,
   ): Promise<BillingAccountResponseDto> {
+    const id = this.validationService.validateUuid(customerId, 'customerId');
     const input = this.validationService.validateChangePlan(body);
-    return this.planService.changePlan(customerId, input);
+    return this.planService.changePlan(id, input);
   }
 }

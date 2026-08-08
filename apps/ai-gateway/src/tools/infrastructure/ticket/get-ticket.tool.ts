@@ -8,19 +8,25 @@ import { ToolResult } from '../../domain/value-objects/tool-result';
 import { ServiceBaseUrlOptions } from '../shared/service-base-url.options';
 import { TICKET_SERVICE_OPTIONS } from './ticket-service.options.token';
 import { executionErrorResult } from '../shared/execution-error-result';
+import {
+  isToolResult,
+  requireUuidArg,
+} from '../shared/require-uuid-arg';
 
 @Injectable()
 export class GetTicketTool implements Tool {
   readonly name = 'get_ticket';
-  readonly description =
-    'Get ticket details by ticketId, or list tickets by customerId.';
+  readonly description = 'Get a single ticket by its UUID.';
   readonly capability: ToolCapability = 'read';
   readonly parameters: Record<string, unknown> = {
     type: 'object',
     properties: {
-      ticketId: { type: 'string', description: 'Ticket UUID' },
-      customerId: { type: 'string', description: 'Customer UUID' },
+      ticketId: {
+        type: 'string',
+        description: 'Ticket UUID',
+      },
     },
+    required: ['ticketId'],
   };
 
   constructor(
@@ -29,33 +35,26 @@ export class GetTicketTool implements Tool {
   ) {}
 
   async execute(call: ToolCall): Promise<ToolResult> {
-    const ticketId = call.arguments['ticketId'];
-    const customerId = call.arguments['customerId'];
+    const ticketIdOrError = requireUuidArg(
+      call,
+      this.name,
+      call.arguments['ticketId'],
+      'ticketId',
+    );
+    if (isToolResult(ticketIdOrError)) {
+      return ticketIdOrError;
+    }
 
     try {
-      if (typeof ticketId === 'string' && ticketId.length > 0) {
-        const { data } = await axios.get(
-          `${this.options.baseUrl}/tickets/${ticketId}`,
-          { timeout: 10_000 },
-        );
-        return {
-          toolCallId: call.id,
-          toolName: this.name,
-          success: true,
-          data: { ticket: data },
-        };
-      }
-
-      const { data } = await axios.get(`${this.options.baseUrl}/tickets`, {
-        params: { customerId },
-        timeout: 10_000,
-      });
-
+      const { data } = await axios.get(
+        `${this.options.baseUrl}/tickets/${ticketIdOrError}`,
+        { timeout: 10_000 },
+      );
       return {
         toolCallId: call.id,
         toolName: this.name,
         success: true,
-        data: { tickets: data },
+        data: { ticket: data },
       };
     } catch (error: unknown) {
       return executionErrorResult(call, this.name, error, 'Get ticket failed');

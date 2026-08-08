@@ -22,13 +22,16 @@ export class CapabilityFallbackPolicy implements ToolSecurityPolicy {
     if (toolDefinition.capability === 'operational') {
       return {
         status: 'DENY',
-        reason: 'Operational action requires authorization',
+        code: 'OPERATIONAL_ACTION_NOT_ALLOWED',
+        reason:
+          'Operational action is not permitted under the current governance policy',
       };
     }
 
     return {
       status: 'REQUIRE_APPROVAL',
-      reason: 'Financial operation requires approval',
+      code: 'REFUND_REQUIRES_APPROVAL',
+      reason: 'Financial operation requires human approval before execution',
       pendingAction: {
         tool: toolCall.toolName,
         arguments: toolCall.arguments,
