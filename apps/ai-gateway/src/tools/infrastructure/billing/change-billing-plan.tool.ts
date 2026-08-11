@@ -18,7 +18,7 @@ export class ChangeBillingPlanTool implements Tool {
   readonly name = 'change_billing_plan';
   readonly description =
     'Change a customer billing plan. Requires customerId (UUID) and plan (FREE|PRO|ENTERPRISE).';
-  readonly capability: ToolCapability = 'operational';
+  readonly capability: ToolCapability = ToolCapability.OPERATIONAL;
   readonly parameters: Record<string, unknown> = {
     type: 'object',
     properties: {

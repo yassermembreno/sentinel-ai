@@ -18,7 +18,7 @@ export class CreateTicketTool implements Tool {
   readonly name = 'create_ticket';
   readonly description =
     'Create a support ticket for a customer. Requires customerId (UUID) and subject.';
-  readonly capability: ToolCapability = 'operational';
+  readonly capability: ToolCapability = ToolCapability.OPERATIONAL;
   readonly parameters: Record<string, unknown> = {
     type: 'object',
     properties: {

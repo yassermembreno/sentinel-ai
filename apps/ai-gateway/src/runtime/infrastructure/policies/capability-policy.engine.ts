@@ -3,9 +3,12 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Execution } from '../../domain/entities/execution';
 import { ToolCall } from '../../../tools/domain/value-objects/tool-call';
 import {
+  denyDecision,
   ToolExecutionDecision,
   ToolExecutionPolicy,
 } from '../../application/ports/tool-execution-policy';
+import { MutatingToolName } from '../../domain/enums/mutating-tool-name';
+import { ToolPolicyStatus } from '../../domain/enums/tool-policy-status';
 import { TOOLS_REGISTRY } from '../../../tools/application/ports/tool-registry.token';
 import { ToolRegistry } from '../../../tools/application/ports/tool-registry';
 import { ToolPolicyResolver } from './tool-policy.resolver';
@@ -33,11 +36,10 @@ export class CapabilityPolicyEngine implements ToolExecutionPolicy {
     execution: Execution,
   ): ToolExecutionDecision {
     if (!this.toolRegistry.has(toolCall.toolName)) {
-      const decision: ToolExecutionDecision = {
-        status: 'DENY',
-        code: 'UNKNOWN_TOOL',
-        reason: `Unknown tool '${toolCall.toolName}'`,
-      };
+      const decision = denyDecision(
+        'UNKNOWN_TOOL',
+        `Unknown tool '${toolCall.toolName}'`,
+      );
       this.securityLogger.logDecision({
         execution,
         toolCall,
@@ -67,7 +69,7 @@ export class CapabilityPolicyEngine implements ToolExecutionPolicy {
     toolCall: ToolCall,
     decision: ToolExecutionDecision,
   ): Record<string, string | number> | undefined {
-    if (toolCall.toolName !== 'apply_credit') {
+    if (toolCall.toolName !== MutatingToolName.APPLY_CREDIT) {
       return undefined;
     }
 
@@ -80,7 +82,7 @@ export class CapabilityPolicyEngine implements ToolExecutionPolicy {
       extras['amount'] = amount;
     }
 
-    if (decision.status === 'REQUIRE_APPROVAL') {
+    if (decision.status === ToolPolicyStatus.REQUIRE_APPROVAL) {
       extras['pendingTool'] = decision.pendingAction.tool;
     }
 

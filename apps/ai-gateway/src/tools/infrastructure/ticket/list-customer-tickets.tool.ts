@@ -18,7 +18,7 @@ export class ListCustomerTicketsTool implements Tool {
   readonly name = 'list_customer_tickets';
   readonly description =
     'List all tickets associated with a customer, including open and closed tickets.';
-  readonly capability: ToolCapability = 'read';
+  readonly capability: ToolCapability = ToolCapability.READ;
   readonly parameters: Record<string, unknown> = {
     type: 'object',
     properties: {

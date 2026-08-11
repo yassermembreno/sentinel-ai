@@ -1,12 +1,23 @@
 import { ToolCall } from '../../../tools/domain/value-objects/tool-call';
-import { ToolResult } from '../../../tools/domain/value-objects/tool-result';
-import { ToolExecutionDecision } from '../../application/ports/tool-execution-policy';
+import {
+  ToolErrorType,
+  ToolResult,
+} from '../../../tools/domain/value-objects/tool-result';
+import {
+  isAllow,
+  ToolExecutionDecision,
+} from '../../application/ports/tool-execution-policy';
+import { ToolPolicyStatus } from '../../domain/enums/tool-policy-status';
 
 export function toPolicyToolResult(
   call: ToolCall,
-  decision: Exclude<ToolExecutionDecision, { status: 'ALLOW' }>,
+  decision: ToolExecutionDecision,
 ): ToolResult {
-  if (decision.status === 'DENY') {
+  if (isAllow(decision)) {
+    throw new Error('ALLOW decisions must not be mapped to a policy tool result');
+  }
+
+  if (decision.status === ToolPolicyStatus.DENY) {
     return {
       toolCallId: call.id,
       toolName: call.toolName,
@@ -16,7 +27,7 @@ export function toPolicyToolResult(
         code: decision.code,
       },
       error: {
-        type: 'POLICY_DENIED',
+        type: ToolErrorType.POLICY_DENIED,
         message: decision.reason,
       },
     };
@@ -32,7 +43,7 @@ export function toPolicyToolResult(
       pendingAction: decision.pendingAction,
     },
     error: {
-      type: 'APPROVAL_REQUIRED',
+      type: ToolErrorType.APPROVAL_REQUIRED,
       message: decision.reason,
     },
   };

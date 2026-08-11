@@ -17,7 +17,7 @@ import {
 export class GetTicketTool implements Tool {
   readonly name = 'get_ticket';
   readonly description = 'Get a single ticket by its UUID.';
-  readonly capability: ToolCapability = 'read';
+  readonly capability: ToolCapability = ToolCapability.READ;
   readonly parameters: Record<string, unknown> = {
     type: 'object',
     properties: {

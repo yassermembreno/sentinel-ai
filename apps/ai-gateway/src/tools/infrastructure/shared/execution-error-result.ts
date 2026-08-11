@@ -1,5 +1,8 @@
 import { ToolCall } from '../../domain/value-objects/tool-call';
-import { ToolResult } from '../../domain/value-objects/tool-result';
+import {
+  ToolErrorType,
+  ToolResult,
+} from '../../domain/value-objects/tool-result';
 
 export function executionErrorResult(
   call: ToolCall,
@@ -14,7 +17,7 @@ export function executionErrorResult(
     toolName,
     success: false,
     error: {
-      type: 'EXECUTION_ERROR',
+      type: ToolErrorType.EXECUTION_ERROR,
       message,
     },
   };

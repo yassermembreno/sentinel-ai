@@ -30,6 +30,10 @@ import {
   CREDIT_POLICY_OPTIONS,
   CreditPolicyOptions,
 } from './infrastructure/policies/tools/credit-policy.options';
+import { ACTION_EVIDENCE_RECORDER_FACTORY } from './application/ports/action-evidence-recorder.token';
+import { FINAL_RESPONSE_INTEGRITY_POLICY } from './application/ports/final-response-integrity-policy.token';
+import { DefaultActionEvidenceRecorderFactory } from './infrastructure/evidence/default-action-evidence-recorder';
+import { DefaultFinalResponseIntegrityPolicy } from './infrastructure/integrity/default-final-response-integrity-policy';
 
 @Module({
   imports: [LlmModule, ToolsModule],
@@ -85,6 +89,14 @@ import {
     {
       provide: TOOL_EXECUTION_POLICY,
       useClass: CapabilityPolicyEngine,
+    },
+    {
+      provide: ACTION_EVIDENCE_RECORDER_FACTORY,
+      useClass: DefaultActionEvidenceRecorderFactory,
+    },
+    {
+      provide: FINAL_RESPONSE_INTEGRITY_POLICY,
+      useClass: DefaultFinalResponseIntegrityPolicy,
     },
   ],
   exports: [AiRuntimeService, PIPELINE_RESOLVER],

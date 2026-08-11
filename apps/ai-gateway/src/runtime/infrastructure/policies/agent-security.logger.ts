@@ -3,7 +3,10 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Execution } from '../../domain/entities/execution';
 import { ToolCall } from '../../../tools/domain/value-objects/tool-call';
 import { ToolCapability } from '../../../tools/domain/enums/tool-capability';
-import { ToolExecutionDecision } from '../../application/ports/tool-execution-policy';
+import {
+  isAllow,
+  ToolExecutionDecision,
+} from '../../application/ports/tool-execution-policy';
 
 @Injectable()
 export class AgentSecurityLogger {
@@ -27,7 +30,7 @@ export class AgentSecurityLogger {
 
     lines.push(`decision=${params.decision.status}`);
 
-    if (params.decision.status !== 'ALLOW') {
+    if (!isAllow(params.decision)) {
       lines.push(`reason="${params.decision.reason}"`);
     }
 
