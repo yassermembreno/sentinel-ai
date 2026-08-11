@@ -99,14 +99,15 @@ El agente sigue siendo útil (puede investigar); solo se limita la autoridad.
 
 Vulnerable: reads + crédito $500 + ticket cerrado (side-effects reales).
 
-**Demo hygiene:** vulnerable runs create/close tickets. Reseed or remigrate `sentinel_ticket` before demos so fixtures stay deterministic (seed open ticket `22222222-...`).
+**Demo hygiene:** vulnerable runs create/close tickets. Reseed or remigrate
+ticket DB before demos so fixtures stay deterministic (seed open ticket
+`22222222-...`). Prefer `pnpm infra:fresh` for a clean slate.
 
 ## Cómo correr
 
-1. Postgres (`pnpm infra:up`), DBs `sentinel`, `sentinel_billing`, `sentinel_ticket`
-2. Migraciones billing/ticket + customer Juan Pérez seeded
-3. Services: customer `:3002`, billing `:3003`, ticket `:3004`
-4. ai-gateway `:3001` con URLs de servicios en `.env`
+1. Postgres (`pnpm infra:up` + `pnpm infra:migrate`): customer `:5436`, ticket `:5437`, billing `:5438`
+2. Services: customer `:3002`, billing `:3003`, ticket `:3004`
+3. ai-gateway `:3001` con URLs de servicios en `.env`
 
 ```http
 POST http://localhost:3001/chat

@@ -1,15 +1,41 @@
 services:
-  postgres:
-    image: postgres:17
-    container_name: sentinel-postgres
+  customer-db:
+    image: postgres:16
+    container_name: sentinel-customer-db
     environment:
-      POSTGRES_USER: sentinel
-      POSTGRES_PASSWORD: sentinel
-      POSTGRES_DB: sentinel
+      POSTGRES_DB: ${CUSTOMER_DB_NAME:-customer}
+      POSTGRES_USER: ${CUSTOMER_DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${CUSTOMER_DB_PASSWORD:-postgres}
     ports:
-      - '5434:5432'
+      - '${CUSTOMER_DB_PORT:-5436}:5432'
     volumes:
-      - sentinel_pgdata:/var/lib/postgresql/data
+      - customer-data:/var/lib/postgresql/data
+
+  ticket-db:
+    image: postgres:16
+    container_name: sentinel-ticket-db
+    environment:
+      POSTGRES_DB: ${TICKET_DB_NAME:-ticket}
+      POSTGRES_USER: ${TICKET_DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${TICKET_DB_PASSWORD:-postgres}
+    ports:
+      - '${TICKET_DB_PORT:-5437}:5432'
+    volumes:
+      - ticket-data:/var/lib/postgresql/data
+
+  billing-db:
+    image: postgres:16
+    container_name: sentinel-billing-db
+    environment:
+      POSTGRES_DB: ${BILLING_DB_NAME:-billing}
+      POSTGRES_USER: ${BILLING_DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${BILLING_DB_PASSWORD:-postgres}
+    ports:
+      - '${BILLING_DB_PORT:-5438}:5432'
+    volumes:
+      - billing-data:/var/lib/postgresql/data
 
 volumes:
-  sentinel_pgdata:
+  customer-data:
+  ticket-data:
+  billing-data:

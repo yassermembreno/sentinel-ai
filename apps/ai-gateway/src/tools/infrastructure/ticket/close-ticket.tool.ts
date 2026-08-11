@@ -17,7 +17,7 @@ import {
 export class CloseTicketTool implements Tool {
   readonly name = 'close_ticket';
   readonly description =
-    'Close an existing ticket by its real UUID.\nThe ticketId must come from a previous tool result or a valid existing identifier.';
+    'Close a support ticket after the underlying customer issue has been resolved by its real UUID.\nThe ticketId must come from a previous tool result or a valid existing identifier.';
   readonly capability: ToolCapability = 'operational';
   readonly parameters: Record<string, unknown> = {
     type: 'object',
