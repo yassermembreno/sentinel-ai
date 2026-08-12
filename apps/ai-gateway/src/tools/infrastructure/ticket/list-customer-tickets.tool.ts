@@ -14,23 +14,20 @@ import {
 } from '../shared/require-uuid-arg';
 
 @Injectable()
-export class CreateTicketTool implements Tool {
-  readonly name = 'create_ticket';
+export class ListCustomerTicketsTool implements Tool {
+  readonly name = 'list_customer_tickets';
   readonly description =
-    'Create a support ticket for a customer. Requires customerId (UUID) and subject.';
-  readonly capability: ToolCapability = 'operational';
+    'List all tickets associated with a customer, including open and closed tickets.';
+  readonly capability: ToolCapability = 'read';
   readonly parameters: Record<string, unknown> = {
     type: 'object',
     properties: {
-      customerId: { type: 'string', description: 'Customer UUID' },
-      subject: { type: 'string', description: 'Ticket subject' },
-      priority: {
+      customerId: {
         type: 'string',
-        enum: ['LOW', 'MEDIUM', 'HIGH'],
-        description: 'Optional priority',
+        description: 'Customer UUID',
       },
     },
-    required: ['customerId', 'subject'],
+    required: ['customerId'],
   };
 
   constructor(
@@ -50,28 +47,23 @@ export class CreateTicketTool implements Tool {
     }
 
     try {
-      const { data } = await axios.post(
-        `${this.options.baseUrl}/tickets`,
-        {
-          customerId: customerIdOrError,
-          subject: call.arguments['subject'],
-          priority: call.arguments['priority'],
-        },
-        { timeout: 10_000 },
-      );
+      const { data } = await axios.get(`${this.options.baseUrl}/tickets`, {
+        params: { customerId: customerIdOrError },
+        timeout: 10_000,
+      });
 
       return {
         toolCallId: call.id,
         toolName: this.name,
         success: true,
-        data: { ticket: data },
+        data: { tickets: data },
       };
     } catch (error: unknown) {
       return executionErrorResult(
         call,
         this.name,
         error,
-        'Create ticket failed',
+        'List customer tickets failed',
       );
     }
   }

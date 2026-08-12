@@ -8,12 +8,17 @@ import { ToolResult } from '../../domain/value-objects/tool-result';
 import { ServiceBaseUrlOptions } from '../shared/service-base-url.options';
 import { BILLING_SERVICE_OPTIONS } from './billing-service.options.token';
 import { executionErrorResult } from '../shared/execution-error-result';
+import {
+  isToolResult,
+  isUuid,
+  requireUuidArg,
+} from '../shared/require-uuid-arg';
 
 @Injectable()
 export class IssueRefundTool implements Tool {
   readonly name = 'issue_refund';
   readonly description =
-    'Issue a refund to a customer. Requires customerId and amount.';
+    'Issue a refund to a customer. Requires customerId (UUID) and amount. Optional invoiceId must be a UUID when provided.';
   readonly capability: ToolCapability = 'financial';
   readonly parameters: Record<string, unknown> = {
     type: 'object',
@@ -31,13 +36,40 @@ export class IssueRefundTool implements Tool {
   ) {}
 
   async execute(call: ToolCall): Promise<ToolResult> {
+    const customerIdOrError = requireUuidArg(
+      call,
+      this.name,
+      call.arguments['customerId'],
+      'customerId',
+    );
+    if (isToolResult(customerIdOrError)) {
+      return customerIdOrError;
+    }
+
+    const invoiceIdArg = call.arguments['invoiceId'];
+    let invoiceId: string | undefined;
+    if (typeof invoiceIdArg === 'string' && invoiceIdArg.length > 0) {
+      if (!isUuid(invoiceIdArg)) {
+        return {
+          toolCallId: call.id,
+          toolName: this.name,
+          success: false,
+          error: {
+            type: 'EXECUTION_ERROR',
+            message: `invoiceId must be a valid UUID (got: ${invoiceIdArg})`,
+          },
+        };
+      }
+      invoiceId = invoiceIdArg;
+    }
+
     try {
       const { data } = await axios.post(
         `${this.options.baseUrl}/refunds`,
         {
-          customerId: call.arguments['customerId'],
+          customerId: customerIdOrError,
           amount: call.arguments['amount'],
-          invoiceId: call.arguments['invoiceId'],
+          ...(invoiceId ? { invoiceId } : {}),
         },
         { timeout: 10_000 },
       );

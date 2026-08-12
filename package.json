@@ -10,10 +10,12 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,mjs,cjs,json,md,yml,yaml}\" --ignore-path .prettierignore",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,cjs,json,md,yml,yaml}\" --ignore-path .prettierignore",
     "typecheck": "turbo typecheck",
-    "infra:up": "docker compose -f infra/docker-compose.yml up -d",
-    "infra:down": "docker compose -f infra/docker-compose.yml down",
-    "infra:reset": "docker compose -f infra/docker-compose.yml down -v",
-    "infra:logs": "docker compose -f infra/docker-compose.yml logs -f"
+    "infra:up": "docker compose --env-file infra/.env -f infra/docker-compose.yml up -d",
+    "infra:down": "docker compose --env-file infra/.env -f infra/docker-compose.yml down",
+    "infra:reset": "docker compose --env-file infra/.env -f infra/docker-compose.yml down -v --remove-orphans",
+    "infra:logs": "docker compose --env-file infra/.env -f infra/docker-compose.yml logs -f",
+    "infra:migrate": "bash infra/migrate.sh",
+    "infra:fresh": "pnpm infra:reset && pnpm infra:up && pnpm infra:migrate"
   },
   "keywords": [],
   "author": "",

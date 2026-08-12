@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   ValidationStrategy,
   createTicketSchema,
+  uuidSchema,
   CreateTicketInput,
 } from '@sentinel/validation';
 
@@ -17,9 +18,26 @@ export class TicketValidationService {
       return result.value;
     }
 
-    throw new ValidationDomainError(
-      result.errors.map((error) => error.message).join(', '),
-      result.errors,
+    throw this.toError(result.errors);
+  }
+
+  validateUuid(value: unknown, field: string): string {
+    const result = this.strategy.validate(uuidSchema, value);
+    if (result.ok) {
+      return result.value;
+    }
+
+    throw new ValidationDomainError(`${field} must be a valid UUID`, [
+      { path: field, message: `${field} must be a valid UUID` },
+    ]);
+  }
+
+  private toError(
+    errors: { path: string; message: string }[],
+  ): ValidationDomainError {
+    return new ValidationDomainError(
+      errors.map((error) => error.message).join(', '),
+      errors,
     );
   }
 }

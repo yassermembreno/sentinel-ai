@@ -34,12 +34,17 @@ Customer API   Billing API   Ticket API
  |
  v
 
-Databases (sentinel / sentinel_billing / sentinel_ticket)
+Databases (customer:5436 / ticket:5437 / billing:5438)
 ```
 
 Bounded autonomy (LLM06): the secure pipeline evaluates tool **arguments**
 via per-tool security policies (e.g. `apply_credit` autonomous limit) before
 execution. See `apps/ai-gateway/src/scenarios/excessive-agency/`.
+
+Prompt injection (LLM01): untrusted tool data (e.g. contaminated
+`ticket.description`) can influence agent reasoning; the secure pipeline
+projects tool-result **provenance** and keeps **execution authority** in
+capability policies. See `apps/ai-gateway/src/scenarios/prompt-injection/`.
 
 ## Repository Structure
 
@@ -83,6 +88,15 @@ Install dependencies:
 
 ```bash
 pnpm install
+```
+
+Local databases (one Postgres per service; credentials in `infra/.env`):
+
+```bash
+pnpm infra:up        # customer:5436, ticket:5437, billing:5438
+pnpm infra:migrate   # schema + demo seeds
+# or from scratch:
+pnpm infra:fresh
 ```
 
 Run development:

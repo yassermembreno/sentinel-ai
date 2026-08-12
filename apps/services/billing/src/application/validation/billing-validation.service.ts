@@ -4,6 +4,7 @@ import {
   createCreditSchema,
   createRefundSchema,
   changeBillingPlanSchema,
+  uuidSchema,
   CreateCreditInput,
   CreateRefundInput,
   ChangeBillingPlanInput,
@@ -37,6 +38,17 @@ export class BillingValidationService {
       return result.value;
     }
     throw this.toValidationError(result.errors);
+  }
+
+  validateUuid(value: unknown, field: string): string {
+    const result = this.strategy.validate(uuidSchema, value);
+    if (result.ok) {
+      return result.value;
+    }
+
+    throw new ValidationDomainError(`${field} must be a valid UUID`, [
+      { path: field, message: `${field} must be a valid UUID` },
+    ]);
   }
 
   private toValidationError(

@@ -19,8 +19,10 @@ export class TicketService {
       id: crypto.randomUUID(),
       customerId: input.customerId,
       subject: input.subject,
+      description: input.description ?? null,
       status: TicketStatus.OPEN,
-      priority: (input.priority as TicketPriority | undefined) ?? TicketPriority.MEDIUM,
+      priority:
+        (input.priority as TicketPriority | undefined) ?? TicketPriority.MEDIUM,
     });
     return ticket;
   }

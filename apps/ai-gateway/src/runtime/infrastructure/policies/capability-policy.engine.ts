@@ -35,6 +35,7 @@ export class CapabilityPolicyEngine implements ToolExecutionPolicy {
     if (!this.toolRegistry.has(toolCall.toolName)) {
       const decision: ToolExecutionDecision = {
         status: 'DENY',
+        code: 'UNKNOWN_TOOL',
         reason: `Unknown tool '${toolCall.toolName}'`,
       };
       this.securityLogger.logDecision({

@@ -8,12 +8,16 @@ import { ToolResult } from '../../domain/value-objects/tool-result';
 import { ServiceBaseUrlOptions } from '../shared/service-base-url.options';
 import { BILLING_SERVICE_OPTIONS } from './billing-service.options.token';
 import { executionErrorResult } from '../shared/execution-error-result';
+import {
+  isToolResult,
+  requireUuidArg,
+} from '../shared/require-uuid-arg';
 
 @Injectable()
 export class ChangeBillingPlanTool implements Tool {
   readonly name = 'change_billing_plan';
   readonly description =
-    'Change a customer billing plan. Requires customerId and plan (FREE|PRO|ENTERPRISE).';
+    'Change a customer billing plan. Requires customerId (UUID) and plan (FREE|PRO|ENTERPRISE).';
   readonly capability: ToolCapability = 'operational';
   readonly parameters: Record<string, unknown> = {
     type: 'object',
@@ -34,11 +38,19 @@ export class ChangeBillingPlanTool implements Tool {
   ) {}
 
   async execute(call: ToolCall): Promise<ToolResult> {
-    const customerId = String(call.arguments['customerId'] ?? '');
+    const customerIdOrError = requireUuidArg(
+      call,
+      this.name,
+      call.arguments['customerId'],
+      'customerId',
+    );
+    if (isToolResult(customerIdOrError)) {
+      return customerIdOrError;
+    }
 
     try {
       const { data } = await axios.patch(
-        `${this.options.baseUrl}/customers/${customerId}/plan`,
+        `${this.options.baseUrl}/customers/${customerIdOrError}/plan`,
         { plan: call.arguments['plan'] },
         { timeout: 10_000 },
       );

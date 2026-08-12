@@ -21,16 +21,19 @@ export class TicketController {
   async list(
     @Query('customerId') customerId: string,
   ): Promise<TicketResponseDto[]> {
-    return this.ticketService.listByCustomer(customerId);
+    const id = this.validationService.validateUuid(customerId, 'customerId');
+    return this.ticketService.listByCustomer(id);
   }
 
   @Get(':id')
   async findById(@Param('id') id: string): Promise<TicketResponseDto> {
-    return this.ticketService.getById(id);
+    const ticketId = this.validationService.validateUuid(id, 'ticketId');
+    return this.ticketService.getById(ticketId);
   }
 
   @Post(':id/close')
   async close(@Param('id') id: string): Promise<TicketResponseDto> {
-    return this.ticketService.close(id);
+    const ticketId = this.validationService.validateUuid(id, 'ticketId');
+    return this.ticketService.close(ticketId);
   }
 }

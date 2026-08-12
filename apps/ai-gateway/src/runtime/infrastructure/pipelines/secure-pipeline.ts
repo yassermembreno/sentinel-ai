@@ -8,11 +8,11 @@ import { ToolExecutionPolicy } from '../../application/ports/tool-execution-poli
 import { TOOL_EXECUTION_POLICY } from '../../application/ports/tool-execution-policy.token';
 import { LLMResolver } from '../../../llm/application/ports/llm-resolver';
 import { LLM_RESOLVER } from '../../../llm/application/ports/llm-resolver.token';
-import { OllamaMapper } from '../../../llm/infrastructure/ollama/mapper/ollama-mapper';
 import { ToolExecutor } from '../../../tools/application/ports/tool-executor';
 import { TOOL_EXECUTOR } from '../../../tools/application/ports/tool-executor.token';
 import { ToolResult } from '../../../tools/domain/value-objects/tool-result';
 import { toPolicyToolResult } from './to-policy-tool-result';
+import { toUntrustedToolMessage } from './to-untrusted-tool-message';
 
 @Injectable()
 export class SecurePipeline implements ChatPipeline {
@@ -25,7 +25,6 @@ export class SecurePipeline implements ChatPipeline {
     private readonly executionPolicy: ExecutionPolicy,
     @Inject(TOOL_EXECUTION_POLICY)
     private readonly toolExecutionPolicy: ToolExecutionPolicy,
-    private readonly ollamaMapper: OllamaMapper,
   ) {}
 
   async execute(execution: Execution): Promise<Execution> {
@@ -76,7 +75,7 @@ export class SecurePipeline implements ChatPipeline {
         if (!result) {
           throw new Error(`Missing tool result for call '${call.toolName}'`);
         }
-        return this.ollamaMapper.toToolMessage(call, result);
+        return toUntrustedToolMessage(call, result);
       });
 
       current = {

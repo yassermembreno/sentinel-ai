@@ -29,6 +29,7 @@ export class ApplyCreditPolicy implements ToolSecurityPolicy {
     if (!Number.isFinite(amount) || amount <= 0) {
       return {
         status: 'DENY',
+        code: 'INVALID_CREDIT_AMOUNT',
         reason: 'Invalid credit amount',
       };
     }
@@ -39,7 +40,8 @@ export class ApplyCreditPolicy implements ToolSecurityPolicy {
 
     return {
       status: 'REQUIRE_APPROVAL',
-      reason: 'Credit exceeds autonomous limit',
+      code: 'AUTONOMOUS_LIMIT_EXCEEDED',
+      reason: `Credit of $${amount} exceeds autonomous limit of $${this.options.autonomousLimitUsd} USD`,
       pendingAction: {
         tool: toolCall.toolName,
         arguments: toolCall.arguments,

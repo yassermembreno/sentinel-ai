@@ -8,11 +8,15 @@ import { ToolResult } from '../../domain/value-objects/tool-result';
 import { CustomerServiceOptions } from '../customer-search/customer-service.options';
 import { CUSTOMER_SERVICE_OPTIONS } from '../customer-search/customer-service.options.token';
 import { executionErrorResult } from '../shared/execution-error-result';
+import {
+  isToolResult,
+  requireUuidArg,
+} from '../shared/require-uuid-arg';
 
 @Injectable()
 export class GetCustomerProfileTool implements Tool {
   readonly name = 'get_customer_profile';
-  readonly description = 'Get a customer profile by customer id.';
+  readonly description = 'Get a customer profile by customer id (UUID).';
   readonly capability: ToolCapability = 'read';
   readonly parameters: Record<string, unknown> = {
     type: 'object',
@@ -31,11 +35,19 @@ export class GetCustomerProfileTool implements Tool {
   ) {}
 
   async execute(call: ToolCall): Promise<ToolResult> {
-    const customerId = String(call.arguments['customerId'] ?? '');
+    const customerIdOrError = requireUuidArg(
+      call,
+      this.name,
+      call.arguments['customerId'],
+      'customerId',
+    );
+    if (isToolResult(customerIdOrError)) {
+      return customerIdOrError;
+    }
 
     try {
       const { data } = await axios.get(
-        `${this.options.baseUrl}/customers/${customerId}`,
+        `${this.options.baseUrl}/customers/${customerIdOrError}`,
         { timeout: 10_000 },
       );
 

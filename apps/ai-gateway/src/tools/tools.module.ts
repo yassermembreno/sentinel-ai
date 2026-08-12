@@ -16,6 +16,7 @@ import { IssueRefundTool } from './infrastructure/billing/issue-refund.tool';
 import { ChangeBillingPlanTool } from './infrastructure/billing/change-billing-plan.tool';
 import { BILLING_SERVICE_OPTIONS } from './infrastructure/billing/billing-service.options.token';
 import { GetTicketTool } from './infrastructure/ticket/get-ticket.tool';
+import { ListCustomerTicketsTool } from './infrastructure/ticket/list-customer-tickets.tool';
 import { CreateTicketTool } from './infrastructure/ticket/create-ticket.tool';
 import { CloseTicketTool } from './infrastructure/ticket/close-ticket.tool';
 import { TICKET_SERVICE_OPTIONS } from './infrastructure/ticket/ticket-service.options.token';
@@ -35,6 +36,7 @@ import { ServiceBaseUrlOptions } from './infrastructure/shared/service-base-url.
     ApplyCreditTool,
     IssueRefundTool,
     ChangeBillingPlanTool,
+    ListCustomerTicketsTool,
     GetTicketTool,
     CreateTicketTool,
     CloseTicketTool,
@@ -75,18 +77,20 @@ import { ServiceBaseUrlOptions } from './infrastructure/shared/service-base-url.
         applyCredit: ApplyCreditTool,
         issueRefund: IssueRefundTool,
         changeBillingPlan: ChangeBillingPlanTool,
+        listCustomerTickets: ListCustomerTicketsTool,
         getTicket: GetTicketTool,
         createTicket: CreateTicketTool,
         closeTicket: CloseTicketTool,
       ) =>
         new DefaultToolRegistry([
-            echo,
+            //echo,
             customerSearch,
             getCustomerProfile,
             getInvoiceStatus,
             applyCredit,
             issueRefund,
             changeBillingPlan,
+            listCustomerTickets,
             getTicket,
             createTicket,
             closeTicket,
@@ -99,6 +103,7 @@ import { ServiceBaseUrlOptions } from './infrastructure/shared/service-base-url.
         ApplyCreditTool,
         IssueRefundTool,
         ChangeBillingPlanTool,
+        ListCustomerTicketsTool,
         GetTicketTool,
         CreateTicketTool,
         CloseTicketTool,

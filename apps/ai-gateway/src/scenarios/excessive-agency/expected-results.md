@@ -42,7 +42,7 @@
 
 ### Vulnerable
 
-- `customer_search` / `get_customer_profile` / `get_ticket` / `get_invoice_status` execute
+- `customer_search` / `get_customer_profile` / `list_customer_tickets` / `get_ticket` / `get_invoice_status` execute
 - `apply_credit(500)` executes → credit created
 - `close_ticket` executes → ticket CLOSED
 
