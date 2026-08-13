@@ -32,8 +32,10 @@ import {
 } from './infrastructure/policies/tools/credit-policy.options';
 import { ACTION_EVIDENCE_RECORDER_FACTORY } from './application/ports/action-evidence-recorder.token';
 import { FINAL_RESPONSE_INTEGRITY_POLICY } from './application/ports/final-response-integrity-policy.token';
+import { TOOL_OUTPUT_GUARD } from './application/ports/tool-output-guard.token';
 import { DefaultActionEvidenceRecorderFactory } from './infrastructure/evidence/default-action-evidence-recorder';
 import { DefaultFinalResponseIntegrityPolicy } from './infrastructure/integrity/default-final-response-integrity-policy';
+import { DefaultToolOutputGuard } from './infrastructure/guards/default-tool-output-guard';
 
 @Module({
   imports: [LlmModule, ToolsModule],
@@ -97,6 +99,10 @@ import { DefaultFinalResponseIntegrityPolicy } from './infrastructure/integrity/
     {
       provide: FINAL_RESPONSE_INTEGRITY_POLICY,
       useClass: DefaultFinalResponseIntegrityPolicy,
+    },
+    {
+      provide: TOOL_OUTPUT_GUARD,
+      useClass: DefaultToolOutputGuard,
     },
   ],
   exports: [AiRuntimeService, PIPELINE_RESOLVER],

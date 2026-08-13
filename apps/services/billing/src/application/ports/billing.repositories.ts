@@ -14,6 +14,7 @@ export interface InvoiceRepository {
 
 export interface CreditRepository {
   save(credit: Credit): Promise<Credit>;
+  deleteByCustomerId(customerId: string): Promise<number>;
 }
 
 export interface RefundRepository {

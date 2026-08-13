@@ -28,4 +28,8 @@ export class CreditService {
       createdAt: credit.createdAt.toISOString(),
     };
   }
+
+  async deleteByCustomerId(customerId: string): Promise<number> {
+    return this.creditRepository.deleteByCustomerId(customerId);
+  }
 }

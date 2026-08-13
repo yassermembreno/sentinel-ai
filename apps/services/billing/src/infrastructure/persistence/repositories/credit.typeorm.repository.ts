@@ -31,4 +31,9 @@ export class CreditTypeOrmRepository implements CreditRepository {
       createdAt: saved.createdAt,
     };
   }
+
+  async deleteByCustomerId(customerId: string): Promise<number> {
+    const result = await this.repository.delete({ customerId });
+    return result.affected ?? 0;
+  }
 }

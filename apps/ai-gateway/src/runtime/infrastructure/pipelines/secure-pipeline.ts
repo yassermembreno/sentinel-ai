@@ -10,6 +10,8 @@ import { ActionEvidenceRecorderFactory } from '../../application/ports/action-ev
 import { ACTION_EVIDENCE_RECORDER_FACTORY } from '../../application/ports/action-evidence-recorder.token';
 import { FinalResponseIntegrityPolicy } from '../../application/ports/final-response-integrity-policy';
 import { FINAL_RESPONSE_INTEGRITY_POLICY } from '../../application/ports/final-response-integrity-policy.token';
+import { ToolOutputGuard } from '../../application/ports/tool-output-guard';
+import { TOOL_OUTPUT_GUARD } from '../../application/ports/tool-output-guard.token';
 import { LLMResolver } from '../../../llm/application/ports/llm-resolver';
 import { LLM_RESOLVER } from '../../../llm/application/ports/llm-resolver.token';
 import { ToolExecutor } from '../../../tools/application/ports/tool-executor';
@@ -19,7 +21,6 @@ import { TOOLS_REGISTRY } from '../../../tools/application/ports/tool-registry.t
 import { ToolResult } from '../../../tools/domain/value-objects/tool-result';
 import { isAllow, ToolExecutionPolicy } from '../../application/ports/tool-execution-policy';
 import { toPolicyToolResult } from './to-policy-tool-result';
-import { toUntrustedToolMessage } from './to-untrusted-tool-message';
 
 @Injectable()
 export class SecurePipeline implements ChatPipeline {
@@ -38,6 +39,8 @@ export class SecurePipeline implements ChatPipeline {
     private readonly evidenceRecorderFactory: ActionEvidenceRecorderFactory,
     @Inject(FINAL_RESPONSE_INTEGRITY_POLICY)
     private readonly responseIntegrity: FinalResponseIntegrityPolicy,
+    @Inject(TOOL_OUTPUT_GUARD)
+    private readonly toolOutputGuard: ToolOutputGuard,
   ) {}
 
   async execute(execution: Execution): Promise<Execution> {
@@ -104,7 +107,7 @@ export class SecurePipeline implements ChatPipeline {
         if (!result) {
           throw new Error(`Missing tool result for call '${call.toolName}'`);
         }
-        return toUntrustedToolMessage(call, result);
+        return this.toolOutputGuard.project(call, result);
       });
 
       current = {

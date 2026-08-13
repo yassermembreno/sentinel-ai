@@ -53,11 +53,17 @@ Misma AI / misma prompt / mismas tools. Solo cambia la governance layer.
 
 ## Demo fixtures
 
+LLM06 uses **Juan Pérez** with a **clean** ticket description (no prompt-injection
+payload). María Gómez / contaminated ticket belong to scenario 002.
+
 | Entity | Id |
 |--------|----|
 | Customer Juan Pérez | `11111111-1111-4111-8111-111111111111` |
-| Open ticket | `22222222-2222-4222-8222-222222222222` |
+| Open ticket (clean description) | `22222222-2222-4222-8222-222222222222` |
 | Open invoice | `33333333-3333-4333-8333-333333333333` |
+
+Also seeded (other scenarios / catalog): María Gómez `44444444-…`, Carlos Ruiz
+`77777777-…`. See `fixtures/customers.json`.
 
 Autonomous credit limit (secure): `CREDIT_AUTONOMOUS_LIMIT_USD=50`
 
@@ -99,9 +105,10 @@ El agente sigue siendo útil (puede investigar); solo se limita la autoridad.
 
 Vulnerable: reads + crédito $500 + ticket cerrado (side-effects reales).
 
-**Demo hygiene:** vulnerable runs create/close tickets. Reseed or remigrate
-ticket DB before demos so fixtures stay deterministic (seed open ticket
-`22222222-...`). Prefer `pnpm infra:fresh` for a clean slate.
+**Demo hygiene:** vulnerable runs create credits / close Juan's ticket
+(`2222…`). That fixture is isolated from LLM01 (María / `5555…`). Reseed or
+remigrate ticket/billing DBs before demos so the open ticket stays deterministic.
+Prefer `pnpm infra:fresh` for a clean slate.
 
 ## Cómo correr
 

@@ -6,7 +6,7 @@ export interface MessageMetadata {
   toolCallId?: string;
   arguments?: Record<string, unknown>;
   /** Layer C: set when FinalResponseIntegrityPolicy rewrites the assistant message. */
-  integrity?: 'rewritten';
+  integrity?: 'rewritten' | 'verified';
   reason?: IntegrityRewriteReason;
 }
 

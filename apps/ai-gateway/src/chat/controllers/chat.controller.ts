@@ -12,6 +12,7 @@ import { Execution } from '../../runtime/domain/entities/execution';
 import { MessageRole } from '../../runtime/domain/enums/message-role';
 import { ChatRequestDto } from '../dto/chat-request.dto';
 import { ChatResponseDto } from '../dto/chat-response.dto';
+import { toChatResponse } from '../mappers/to-chat-response';
 
 @Controller('chat')
 export class ChatController {
@@ -42,10 +43,6 @@ export class ChatController {
 
     const result = await this.aiRuntimeService.execute(execution);
 
-    return {
-      executionId: result.id,
-      sessionId: result.sessionId,
-      messages: result.messages,
-    };
+    return toChatResponse(result);
   }
 }
