@@ -18,7 +18,7 @@ export class GetInvoiceStatusTool implements Tool {
   readonly name = 'get_invoice_status';
   readonly description =
     'Get invoice status for a customer. Provide customerId (UUID) and optionally invoiceId (UUID).';
-  readonly capability: ToolCapability = 'read';
+  readonly capability: ToolCapability = ToolCapability.READ;
   readonly parameters: Record<string, unknown> = {
     type: 'object',
     properties: {

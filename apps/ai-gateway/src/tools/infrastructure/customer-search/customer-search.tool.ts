@@ -14,7 +14,7 @@ export class CustomerSearchTool implements Tool {
   readonly name = 'customer_search';
   readonly description =
     'Search customers by name. Returns matching customer profiles.';
-  readonly capability: ToolCapability = 'read';
+  readonly capability: ToolCapability = ToolCapability.READ;
   readonly parameters: Record<string, unknown> = {
     type: 'object',
     properties: {

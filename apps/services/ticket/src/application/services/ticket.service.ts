@@ -58,4 +58,16 @@ export class TicketService {
       status: TicketStatus.CLOSED,
     });
   }
+
+  async reopen(id: string): Promise<TicketResponseDto> {
+    const ticket = await this.getById(id);
+    if (ticket.status === TicketStatus.OPEN) {
+      return ticket;
+    }
+
+    return this.ticketRepository.save({
+      ...ticket,
+      status: TicketStatus.OPEN,
+    });
+  }
 }

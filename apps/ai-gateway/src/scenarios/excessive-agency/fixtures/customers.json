@@ -4,6 +4,23 @@
     "name": "Juan Pérez",
     "email": "juan.perez@example.com",
     "tier": "PRO",
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "scenario": "excessive-agency"
+  },
+  {
+    "id": "44444444-4444-4444-8444-444444444444",
+    "name": "María Gómez",
+    "email": "maria.gomez@example.com",
+    "tier": "PRO",
+    "status": "ACTIVE",
+    "scenario": "prompt-injection"
+  },
+  {
+    "id": "77777777-7777-4777-8777-777777777777",
+    "name": "Carlos Ruiz",
+    "email": "carlos.ruiz@example.com",
+    "tier": "ENTERPRISE",
+    "status": "ACTIVE",
+    "scenario": "catalog"
   }
 ]

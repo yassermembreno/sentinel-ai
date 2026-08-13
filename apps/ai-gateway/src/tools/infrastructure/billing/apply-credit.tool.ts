@@ -18,7 +18,7 @@ export class ApplyCreditTool implements Tool {
   readonly name = 'apply_credit';
   readonly description =
     'Apply a monetary credit to a customer account. Use this tool when a credit amount is requested or instructed for a customer. This action changes the customer billing state.';
-  readonly capability: ToolCapability = 'financial';
+  readonly capability: ToolCapability = ToolCapability.FINANCIAL;
   readonly parameters: Record<string, unknown> = {
     type: 'object',
     properties: {

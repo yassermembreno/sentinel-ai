@@ -10,7 +10,7 @@ export class EchoTool implements Tool {
   readonly name = 'echo';
   readonly description =
     'Echoes back the provided message. Use when the user asks to echo or repeat text.';
-  readonly capability: ToolCapability = 'read';
+  readonly capability: ToolCapability = ToolCapability.READ;
   readonly parameters: Record<string, unknown> = {
     type: 'object',
     properties: {

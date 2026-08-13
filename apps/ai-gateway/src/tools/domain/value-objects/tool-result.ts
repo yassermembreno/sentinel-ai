@@ -1,7 +1,11 @@
+export const ToolErrorType = {
+  EXECUTION_ERROR: 'EXECUTION_ERROR',
+  POLICY_DENIED: 'POLICY_DENIED',
+  APPROVAL_REQUIRED: 'APPROVAL_REQUIRED',
+} as const;
+
 export type ToolErrorType =
-  | 'EXECUTION_ERROR'
-  | 'POLICY_DENIED'
-  | 'APPROVAL_REQUIRED';
+  (typeof ToolErrorType)[keyof typeof ToolErrorType];
 
 export type ToolError = {
   type: ToolErrorType;

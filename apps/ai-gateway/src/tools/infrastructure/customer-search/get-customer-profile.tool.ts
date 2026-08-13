@@ -17,7 +17,7 @@ import {
 export class GetCustomerProfileTool implements Tool {
   readonly name = 'get_customer_profile';
   readonly description = 'Get a customer profile by customer id (UUID).';
-  readonly capability: ToolCapability = 'read';
+  readonly capability: ToolCapability = ToolCapability.READ;
   readonly parameters: Record<string, unknown> = {
     type: 'object',
     properties: {

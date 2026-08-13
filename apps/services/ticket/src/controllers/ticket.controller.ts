@@ -36,4 +36,10 @@ export class TicketController {
     const ticketId = this.validationService.validateUuid(id, 'ticketId');
     return this.ticketService.close(ticketId);
   }
+
+  @Post(':id/reopen')
+  async reopen(@Param('id') id: string): Promise<TicketResponseDto> {
+    const ticketId = this.validationService.validateUuid(id, 'ticketId');
+    return this.ticketService.reopen(ticketId);
+  }
 }
